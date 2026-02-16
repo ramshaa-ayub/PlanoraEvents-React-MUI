@@ -23,12 +23,12 @@ It was developed as a frontend project to demonstrate responsive layouts, reusab
 - Clean and modern UI/UX  
 
 ---
+## How to run
+### npm run dev
 
-## 🚀 How to run
-```bash
-npm run dev
+---
 
-👩‍💻 Developer
-Ramsha Ayub
-Full Stack Developer
+## Full stack Developer
+### Ramsha Ayub
 Passionate about building clean, responsive, and user-friendly websites.
+
