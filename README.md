@@ -1,4 +1,4 @@
-# 📌 Planora Events
+#  Planora Events
 
 ![Preview](./public/images/planora-preview.PNG)
 
@@ -24,15 +24,10 @@ It was developed as a frontend project to demonstrate responsive layouts, reusab
 
 ---
 
-## 🚀 Project Setup
-
-Install dependencies:
-
+## 🚀 How to run
 ```bash
-npm install
-Start the development server:
-
 npm run dev
+
 👩‍💻 Developer
 Ramsha Ayub
 Full Stack Developer
