@@ -24,7 +24,7 @@ It was developed as a frontend project to demonstrate responsive layouts, reusab
 
 ---
 ## How to run
-### npm run dev
+npm run dev
 
 ---
 
