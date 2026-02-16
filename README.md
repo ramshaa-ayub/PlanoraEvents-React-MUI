@@ -1,3 +1,39 @@
-# PlanoraEvents-React-MUI
+# 📌 Planora Events
 
-Planora Events is a multi-page React website built with Material UI
+![Preview](./public/images/planora-preview.PNG)
+
+Planora Events is a modern and responsive event management website built using React and Material UI.  
+The project focuses on clean design, smooth animations, structured components, and an elegant user experience.
+
+It was developed as a frontend project to demonstrate responsive layouts, reusable components, and interactive UI elements.
+
+---
+
+## ✨ Features
+
+- Engaging and visually appealing Hero Section  
+- Well-structured About Page  
+- Professional Services Section  
+- Animated Gallery Section  
+- Login & Signup Modal  
+- Form Validation (required fields, proper input handling, and error messages)  
+- Smooth page transitions  
+- Scroll to Top functionality  
+- Fully Responsive Design  
+- Clean and modern UI/UX  
+
+---
+
+## 🚀 Project Setup
+
+Install dependencies:
+
+```bash
+npm install
+Start the development server:
+
+npm run dev
+👩‍💻 Developer
+Ramsha Ayub
+Full Stack Developer
+Passionate about building clean, responsive, and user-friendly websites.
