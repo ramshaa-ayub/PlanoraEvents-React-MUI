@@ -1,6 +1,6 @@
 #  Planora Events
 
-![Preview](./public/images/planora-preview.PNG)
+![Preview](./public/images/Planora Events.png)
 
 Planora Events is a modern and responsive event management website built using React and Material UI.  
 The project focuses on clean design, smooth animations, structured components, and an elegant user experience.
