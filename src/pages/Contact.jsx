@@ -10,24 +10,100 @@ function Contact() {
     eventDate: "",
     message: "",
   });
-  const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const newErrors = {};
-    if (!form.name) newErrors.name = "Name is required";
-    if (!form.email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Email is invalid";
-    if (!form.phone) newErrors.phone = "Phone number is required";
-    if (!form.eventType) newErrors.eventType = "Please select an event type";
-    if (!form.eventDate) newErrors.eventDate = "Event date is required";
-    if (!form.message) newErrors.message = "Message is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const validateField = (name, value) => {
+    let error = "";
+
+    switch (name) {
+      case "name":
+        if (!value.trim()) error = "Name is required";
+        else if (value.trim().length < 3)
+          error = "Name must be at least 3 characters";
+        break;
+
+      case "email":
+        if (!value) error = "Email is required";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          error = "Enter a valid email address";
+        break;
+
+      case "phone":
+        if (!value) error = "Phone number is required";
+        else if (!/^[0-9]{10,15}$/.test(value))
+          error = "Enter valid phone number (10-15 digits)";
+        break;
+
+      case "eventType":
+        if (!value) error = "Please select an event type";
+        break;
+
+      case "eventDate":
+        if (!value) error = "Event date is required";
+        else if (new Date(value) < new Date().setHours(0, 0, 0, 0))
+          error = "Event date cannot be in the past";
+        break;
+
+      case "message":
+        if (!value.trim()) error = "Message is required";
+        else if (value.trim().length < 10)
+          error = "Message must be at least 10 characters";
+        break;
+
+      default:
+        break;
+    }
+
+    return error;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm({ ...form, [name]: value });
+
+    if (touched[name]) {
+      setErrors({
+        ...errors,
+        [name]: validateField(name, value),
+      });
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    setTouched({ ...touched, [name]: true });
+
+    setErrors({
+      ...errors,
+      [name]: validateField(name, value),
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
+
+    let newErrors = {};
+    Object.keys(form).forEach((key) => {
+      newErrors[key] = validateField(key, form[key]);
+    });
+
+    setErrors(newErrors);
+    setTouched({
+      name: true,
+      email: true,
+      phone: true,
+      eventType: true,
+      eventDate: true,
+      message: true,
+    });
+
+    const isValid = Object.values(newErrors).every((err) => err === "");
+
+    if (isValid) {
       alert("Form submitted successfully!");
       setForm({
         name: "",
@@ -37,6 +113,7 @@ function Contact() {
         eventDate: "",
         message: "",
       });
+      setTouched({});
     }
   };
 
@@ -50,50 +127,57 @@ function Contact() {
   ];
 
   return (
-    
     <Box sx={{ border: "2px solid #b42576", borderRadius: 2 ,maxWidth: 700, mx: "auto", mt: 2, px: 2 }}>
       <Typography color="#b42576" variant="h4" mt={1} gutterBottom>
         Plan Your Event
       </Typography>
-      {/* <Typography sx={{ mb: 3, color: "#bebebe" }}>
-        Fill out the form below and our team will get back to you to make your event unforgettable!
-      </Typography> */}
 
       <form onSubmit={handleSubmit} noValidate>
         <TextField
           fullWidth
+          name="name"
           label="Name"
           margin="normal"
           value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.name}
           helperText={errors.name}
         />
+
         <TextField
           fullWidth
+          name="email"
           label="Email"
           margin="normal"
           value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.email}
           helperText={errors.email}
         />
+
         <TextField
           fullWidth
+          name="phone"
           label="Phone Number"
           margin="normal"
           value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.phone}
           helperText={errors.phone}
         />
+
         <TextField
           select
           fullWidth
+          name="eventType"
           label="Event Type"
           margin="normal"
           value={form.eventType}
-          onChange={(e) => setForm({ ...form, eventType: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.eventType}
           helperText={errors.eventType}
         >
@@ -103,25 +187,31 @@ function Contact() {
             </MenuItem>
           ))}
         </TextField>
+
         <TextField
           fullWidth
+          name="eventDate"
           label="Event Date"
           type="date"
           margin="normal"
           InputLabelProps={{ shrink: true }}
           value={form.eventDate}
-          onChange={(e) => setForm({ ...form, eventDate: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.eventDate}
           helperText={errors.eventDate}
         />
+
         <TextField
           fullWidth
+          name="message"
           label="Additional Details / Message"
           margin="normal"
           multiline
           rows={5}
           value={form.message}
-          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!errors.message}
           helperText={errors.message}
         />
@@ -142,7 +232,6 @@ function Contact() {
             letterSpacing: "1px",
             transition: "0.3s",
             boxSizing: "border-box",
-
             "&:hover": {
               backgroundColor: "#b42576",
               color: "#240046",
@@ -151,8 +240,6 @@ function Contact() {
         >
           Submit
         </Button>
-
-
       </form>
     </Box>
   );
